@@ -1,0 +1,7 @@
+---
+bundle:
+  moria:
+    keys_path: user-keys
+    secrets_path: secrets
+    keys:
+      - gandalf
