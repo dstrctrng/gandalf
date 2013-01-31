@@ -1,0 +1,59 @@
+#!/bin/bash
+
+if [[ "${BASH_SOURCE##*/}" != "_sub" ]]; then
+  shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
+  source "$shome/libexec/_jason"
+  set -- "$BASH_SOURCE" "$@"
+fi
+
+if [[ "$(type -t main)" != "function" ]]; then
+function main {
+  if [[ "$#" > 0 ]]; then
+    logger_fatal "Command $sub_base $1 not implemented"
+  else
+    logger_fatal "Command $sub_base not implemented"
+  fi
+  exit 1
+}
+fi
+
+function sub {
+  local bsource="$1"; shift
+  local sub_base="$(basename "$bsource")"
+  local bsource_cmd="$shome/libexec/${sub_base}"
+
+  if [[ "$bsource_cmd" = "$bsource" ]]; then
+    FLAGS_SUB="$FLAGS_TRUE"
+    parse_command_line "$@" || exit $?
+    eval set -- "${FLAGS_ARGV}"
+  fi
+
+  if [[ "$#" > 0 ]]; then
+    if [[ ! "$1" =~ ^- ]]; then
+      local sub_cmd="$(command -v "${sub_base}-$1" || true)"
+      if [[ ! -x "$sub_cmd" ]]; then
+        sub_cmd="$shome/libexec/${sub_base}-$1"
+      fi
+
+      if [[ -x "$sub_cmd" ]]; then
+        shift
+        exec "$sub_cmd" "$@"
+      fi
+    fi
+  fi
+
+  if [[ -x "$bsource_cmd" && "$bsource_cmd" != "$bsource" ]]; then
+    exec "$bsource_cmd" "$@"
+  else
+    if [[ "$(type -t main)" = "function" ]]; then
+      main "$@"
+    else
+      logger_fatal "Can't run $sub_base, missing main function"
+      exit 1
+    fi
+  fi
+}
+
+if [[ "$#" > 0 ]]; then
+  sub "$@"  
+fi
