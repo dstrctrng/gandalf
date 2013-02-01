@@ -10,17 +10,17 @@ address.
 Bundles are referenced in `config/gandalf.yml`.  The moria bundle is already
 defined as an example and uses gandalf's key.
 
-    bin/new moria
+    bin/new bundle moria
 
 # View the secrets
 
 The bundle should be encrypted with gandalf's key and unlocked with his
 passphrase.
 
-    bin/list moria
+    bin/list bundle moria
 
 # Edit the secrets
 
 Will decrypt the bundle into a temporary file and edit with $EDITOR or vim.
 
-    bin/edit moria
+    bin/edit bundle moria
