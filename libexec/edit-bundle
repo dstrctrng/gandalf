@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #/ NAME
-#/     edit passwords -- edit a password bundle
+#/     edit bundle -- edit a password bundle
 #/
 #/ SYNOPSIS
-#/     edit passwords bundle
+#/     edit bundle name
 
 # figure out the project root under which bin, lib live
 shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
