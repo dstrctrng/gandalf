@@ -1,0 +1,48 @@
+#!/bin/bash
+
+#/ NAME
+#/     new key -- create a new gpg key
+#/
+#/ SYNOPSIS
+#/     new key email
+
+# figure out the project root under which bin, lib live
+shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
+
+# load a jason bourne library
+source "$shome/libexec/_jason"
+
+readonly cfg_gandalf="$shome/config/gandalf.yml"
+
+# entry point
+function main {
+  if [[ "$#" = 0 ]]; then
+    logger_fatal "missing email"
+    exit 1
+  fi
+
+  readonly local email="$1"; shift
+  readonly local tmp_genkey="$(mktemp -t XXXXXXXXX)"
+
+  cat > "$tmp_genkey" <<EOF
+Key-Type: RSA
+Key-Length: 2048
+Subkey-Type: RSA
+Subkey-Length: 2048
+Name-Email: $email
+Expire-Date: 1y
+%commit
+EOF
+
+  gpg --batch --gen-key "$tmp_genkey"
+  rm -f "$tmp_genkey"
+  gpg --edit-key "$email" passwd save
+
+  gpg --export -a "$email" > "$(keys_path)/gpg/$email"
+}
+
+function keys_path {
+  ryaml "$cfg_gandalf" keys_path
+}
+
+require sub "$BASH_SOURCE" "$@"
