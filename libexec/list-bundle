@@ -17,7 +17,7 @@ readonly cfg_gandalf="$shome/config/gandalf.yml"
 # entry point
 function main {
   if [[ "$#" = 0 ]]; then
-    log_fatal "missing name of secrets bundle"
+    logger_fatal "missing name of secrets bundle"
     exit 1
   fi
 
