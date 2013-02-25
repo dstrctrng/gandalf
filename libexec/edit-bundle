@@ -14,6 +14,11 @@ source "$shome/libexec/_jason"
 
 readonly cfg_gandalf="$shome/config/gandalf.yml"
 
+function gug {
+  logger_info "gpg $@"
+  gpg "$@"
+}
+
 # entry point
 function main {
   if [[ "$#" = 0 ]]; then
@@ -25,17 +30,17 @@ function main {
   readonly local tmp_keyring="$(mktemp -t XXXXXXXXX)"
 
   set +f
-  gpg --no-default-keyring --keyring "$tmp_keyring" --import "$(keys_path)/gpg/"*
+  gug --no-default-keyring --keyring "$tmp_keyring" --import "$(keys_path)/gpg/"*
   set -f
 
   readonly local tmp_container="$(mktemp -d -t XXXXXXXXX)"
   readonly local tmp_buffer="$(TMPDIR="$tmp_container" mktemp -t XXXXXXXXX)"
 
-  gpg -a -d "$(secrets_path)/${nm_bundle}.yml.gpg" > "$tmp_buffer"
+  gug -a -d "$(secrets_path)/${nm_bundle}.yml.gpg" > "$tmp_buffer"
   "${EDITOR:-vim}" "$tmp_buffer"
 
   readonly local tmp_bundle="$(mktemp -t XXXXXXXXX)"
-  if gpg --yes --no-default-keyring --keyring "$tmp_keyring" -a -e -o "$tmp_bundle" $(recipients) "$tmp_buffer"; then
+  if gug --yes --trust-model always --no-default-keyring --keyring "$tmp_keyring" -a -e -o "$tmp_bundle" $(recipients) "$tmp_buffer"; then
     mv -f "$tmp_bundle" "$(secrets_path)/$nm_bundle.yml.gpg"
   else
     rm -f "$tmp_bundle"
@@ -60,7 +65,7 @@ function secrets_path {
 function recipients {
   local _a
   for _a in $(keys); do
-    echo -n "-r $_a"
+    echo -n " -r $_a"
   done
 }
 
