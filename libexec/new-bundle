@@ -11,8 +11,10 @@ shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
 
 # load a jason bourne library
 source "$shome/libexec/_jason"
+require gandalf "${GANDALF:-$shome}"
+require gandalf_
 
-readonly cfg_gandalf="$shome/config/gandalf.yml"
+readonly cfg_gandalf="$GANDALF/config/gandalf.yml"
 
 # entry point
 function main {
@@ -32,25 +34,6 @@ function main {
   echo "---" | gpg --no-default-keyring --keyring "$tmp_keyring" -a -e -o "$(secrets_path)/$nm_bundle.yml.gpg" $(recipients)
 
   rm -f "$tmp_keyring"
-}
-
-function keys {
-  ryaml "$cfg_gandalf" bundle "$nm_bundle" keys | awk '$1 == "-" { print $NF }' | xargs --
-}
-
-function keys_path {
-  ryaml "$cfg_gandalf" keys_path
-}
-
-function secrets_path {
-  ryaml "$cfg_gandalf" bundle "$nm_bundle" secrets_path
-}
-
-function recipients {
-  local _a
-  for _a in $(keys); do
-    echo -n "-r $_a"
-  done
 }
 
 require sub "$BASH_SOURCE" "$@"

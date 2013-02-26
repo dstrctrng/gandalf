@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ "$#" > 0 && -n "${GANDALF:-}" ]]; then
+  GANDALF="$1"; shift
+else
+  GANDALF="$(cd -P -- "$(dirname -- "${BASH_SOURCE}")/.." && pwd -P)"
+fi  
+
+export GANDALF
+
+PATH="$PATH:$(dirname $BASH_SOURCE)"

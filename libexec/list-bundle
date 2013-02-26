@@ -11,8 +11,10 @@ shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
 
 # load a jason bourne library
 source "$shome/libexec/_jason"
+require gandalf "${GANDALF:-$shome}"
+require gandalf_
 
-readonly cfg_gandalf="$shome/config/gandalf.yml"
+readonly cfg_gandalf="$GANDALF/config/gandalf.yml"
 
 # entry point
 function main {
@@ -24,10 +26,6 @@ function main {
   readonly local nm_bundle="$1"; shift
 
   gpg -a -d "$(secrets_path)/${nm_bundle}.yml.gpg"
-}
-
-function secrets_path {
-  ryaml "$cfg_gandalf" bundle "$nm_bundle" secrets_path
 }
 
 require sub "$BASH_SOURCE" "$@"
