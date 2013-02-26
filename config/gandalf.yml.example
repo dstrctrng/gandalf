@@ -1,7 +1,7 @@
 ---
-keys_path: user-keys
+keys_path: config
 bundle:
   moria:
-    secrets_path: secrets
+    secrets_path: .secrets
     keys:
       - gandalf@middle.earth
