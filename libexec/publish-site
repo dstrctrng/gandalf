@@ -16,11 +16,10 @@ source "$shome/libexec/_jason"
 # define command line options:
 DEFINE_boolean "clean" "$FLAGS_FALSE" "delete destination branch contents"
 DEFINE_string "message" "published $(date)" "commit message for published content" "m"
+DEFINE_boolean "force" "$FLAGS_FALSE" "force push to remote" "f"
 
 # entry point
 function main {
-  set -x
-
   if [[ "$#" = 0 ]]; then
     local src_dir="output"
   else
@@ -71,11 +70,17 @@ function main {
   pushd "$tmp_dir" > /dev/null
   git add .
   git status -s
-  git commit -m "$FLAGS_message"
+  git commit -m "$FLAGS_message" || true
   git push origin "$dst_branch"
   popd > /dev/null
-
   rm -rf "$tmp_dir"
+
+  local opt_push=
+  if [[ "$FLAGS_force" = "$FLAGS_TRUE" ]]; then
+    opt_push="-f "
+  fi
+  git push $opt_push primary $dst_branch:refs/heads/$dst_branch
+  git push $opt_push secondary $dst_branch:refs/heads/$dst_branch || true
 }
 
 require sub "$BASH_SOURCE" "$@"

@@ -16,11 +16,17 @@ source "$shome/libexec/_jason"
 DEFINE_boolean "private" "$FLAGS_TRUE" "push to a local, private geminabox"
 DEFINE_boolean "shared" "$FLAGS_FALSE" "push to a shared, private geminabox"
 DEFINE_boolean "public" "$FLAGS_FALSE" "push to rubygems.org"
+DEFINE_string "server" "http://localhost:9292" "geminabox server"
 
 # entry point
 function main {
   if [[ "$FLAGS_public" = "$FLAGS_TRUE" ]]; then
-    push_gem "$@"
+    if [[ ! -f "$shome/.private" ]]; then
+      push_gem_public "$@"
+    else
+      logger_fatal "This project is marked private"
+      exit 1
+    fi
   elif [[ "$FLAGS_private" = "$FLAGS_TRUE" ]]; then
     push_gem_private
   else
@@ -37,12 +43,12 @@ function push_gem_private {
     push_gem_private "$latest_gem"
     set -f
   else
-    gem inabox -g http://localhost:9292 "$@"
+    gem inabox -g "$FLAGS_server" "$@"
   fi
 }
 
 # push the latest gem to rubygems.org
-function push_gem {
+function push_gem_public {
   set +f
   local latest_gem="$(ls -td *.gem 2>&- | head -1)"
   set -f
