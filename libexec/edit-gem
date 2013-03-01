@@ -9,7 +9,7 @@
 #/     edit gem -R
 
 # figure out the project root under which bin, lib live
-shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
+shome="$(unset CDPATH; unset CDPATH; cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
 
 # load a jason bourne library
 source "$shome/libexec/_jason"
@@ -67,7 +67,7 @@ function main {
       exit 1
     fi
 
-    pth_gem="$(cd -P -- "$pth_gem" && pwd -P)"
+    pth_gem="$(unset CDPATH; cd -P -- "$pth_gem" && pwd -P)"
 
     echo "enabling local gem development on ${nm_gem} at ${pth_gem}"
     mkdir -p "$shome/.local"
