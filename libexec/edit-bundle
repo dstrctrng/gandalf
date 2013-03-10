@@ -19,6 +19,13 @@ readonly cfg_gandalf="$GANDALF/config/gandalf.yml"
 # entry point
 function main {
   if [[ "$#" = 0 ]]; then
+    local default_bundle="$(ryaml $cfg_gandalf bundle default)"
+    if [[ -n "$default_bundle" ]]; then
+      set -- "$default_bundle" "$@"
+    fi
+  fi
+
+  if [[ "$#" = 0 ]]; then
     logger_fatal "missing name of secrets bundle"
     exit 1
   fi
