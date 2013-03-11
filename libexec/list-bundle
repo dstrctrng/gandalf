@@ -32,7 +32,7 @@ function main {
 
   readonly local nm_bundle="$1"; shift
 
-  gpg -a -d "$(secrets_path)/${nm_bundle}.yml.gpg"
+  gpg -a -d "$(secrets_path)/${nm_bundle}.gpg"
 }
 
 require sub "$BASH_SOURCE" "$@"

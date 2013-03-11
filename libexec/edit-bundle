@@ -40,12 +40,12 @@ function main {
   readonly local tmp_container="$(mktemp -d -t XXXXXXXXX)"
   readonly local tmp_buffer="$(TMPDIR="$tmp_container" mktemp -t XXXXXXXXX)"
 
-  gpg -a -d "$(secrets_path)/${nm_bundle}.yml.gpg" > "$tmp_buffer"
+  gpg -a -d "$(secrets_path)/${nm_bundle}.gpg" > "$tmp_buffer"
   "${EDITOR:-vim}" "$tmp_buffer"
 
   readonly local tmp_bundle="$(mktemp -t XXXXXXXXX)"
   if gpg --yes --trust-model always --no-default-keyring --keyring "$tmp_keyring" -a -e -o "$tmp_bundle" $(recipients) "$tmp_buffer"; then
-    mv -f "$tmp_bundle" "$(secrets_path)/$nm_bundle.yml.gpg"
+    mv -f "$tmp_bundle" "$(secrets_path)/$nm_bundle.gpg"
   else
     rm -f "$tmp_bundle"
   fi

@@ -31,7 +31,7 @@ function main {
     gpg --no-default-keyring --keyring "$tmp_keyring" --import "$(keys_path)/gpg/$_rcpt"
   done
 
-  echo "---" | gpg --no-default-keyring --keyring "$tmp_keyring" -a -e -o "$(secrets_path)/$nm_bundle.yml.gpg" $(recipients)
+  echo "---" | gpg --no-default-keyring --keyring "$tmp_keyring" -a -e -o "$(secrets_path)/$nm_bundle.gpg" $(recipients)
 
   rm -f "$tmp_keyring"
 }
