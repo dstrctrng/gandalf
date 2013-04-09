@@ -40,6 +40,7 @@ function main {
   readonly local tmp_container="$(mktemp -d -t XXXXXXXXX)"
   readonly local tmp_buffer="$(TMPDIR="$tmp_container" mktemp -t XXXXXXXXX)"
 
+  git pull
   gpg -a -d "$(secrets_path)/${nm_bundle}.gpg" > "$tmp_buffer"
   "${EDITOR:-vim}" "$tmp_buffer"
 
