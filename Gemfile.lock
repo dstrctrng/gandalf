@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    alox-gandalf (0.0.6)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    alox-jason (0.0.25)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  alox-gandalf!
+  alox-jason
