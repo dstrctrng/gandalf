@@ -6,11 +6,13 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    alox (0.0.4)
     alox-jason (0.0.25)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  alox
   alox-gandalf!
   alox-jason

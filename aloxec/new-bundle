@@ -10,9 +10,9 @@
 shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
 
 # load a jason bourne library
-source "$shome/libexec/_jason"
-require gandalf "${GANDALF:-$shome}"
-require gandalf_
+source _jason
+require _gandalf "${GANDALF:-$shome}"
+require _gandalf_
 
 readonly cfg_gandalf="$GANDALF/config/gandalf.yml"
 
