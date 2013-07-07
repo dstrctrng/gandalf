@@ -35,4 +35,4 @@ function main {
   gpg -a -d "$(secrets_path)/${nm_bundle}.gpg"
 }
 
-require sub "$BASH_SOURCE" "$@"
+require _sub "$BASH_SOURCE" "$@"

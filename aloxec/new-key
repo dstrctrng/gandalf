@@ -43,4 +43,4 @@ EOF
   gpg --export -a "$email" > "$(keys_path)/gpg/$email"
 }
 
-require sub "$BASH_SOURCE" "$@"
+require _sub "$BASH_SOURCE" "$@"
