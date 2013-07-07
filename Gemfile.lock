@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    alox-gandalf (0.0.7)
+    alox-gandalf (0.0.8)
 
 GEM
   remote: https://rubygems.org/
