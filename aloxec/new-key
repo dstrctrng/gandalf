@@ -11,7 +11,7 @@ shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
 
 # load a jason bourne library
 source _jason
-require _gandalf "${GANDALF:-$shome}"
+require _gandalf "${GANDALF:-}"
 require _gandalf_
 
 readonly cfg_gandalf="$GANDALF/config/gandalf.yml"
@@ -40,7 +40,7 @@ EOF
   rm -f "$tmp_genkey"
   gpg --edit-key "$email" passwd save
 
-  gpg --export -a "$email" > "$(keys_path)/gpg/$email"
+  gpg --export -a "$email" > "$(keys_path)/$email"
 }
 
 require _sub "$BASH_SOURCE" "$@"

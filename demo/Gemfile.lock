@@ -1,18 +1,22 @@
 PATH
-  remote: .
+  remote: ../../alox
+  specs:
+    alox (0.0.6)
+
+PATH
+  remote: /Users/davidnghiem/work/gandalf
   specs:
     alox-gandalf (0.0.8)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    alox (0.0.4)
     alox-jason (0.0.25)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  alox
+  alox!
   alox-gandalf!
   alox-jason

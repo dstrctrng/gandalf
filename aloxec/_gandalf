@@ -2,13 +2,13 @@
 
 if [[ "$#" > 0 ]]; then
   GANDALF="$1"; shift
-else
-  : ${GANDALF:="$(cd -P -- "$(dirname -- "${BASH_SOURCE}")/.." && pwd -P)"}
-fi  
+fi
+
+if [[ -z "${GANDALF:-}" ]]; then
+  GANDALF="$(pwd -P)"
+fi
 
 export GANDALF
-
-PATH="$PATH:$(dirname $BASH_SOURCE)"
 
 if [[ ! -x "$(type -P gpg 2>&-)" ]]; then
   echo "ERROR: could not find gpg tool" 1>&2
