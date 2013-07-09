@@ -9,3 +9,7 @@ all: $(BUNDLER)
 no_bundler:
 	@echo need bundler, try running gem install bundler
 	@false
+
+update:
+	@$(BUNDLER) update
+	@$(MAKE) all

@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gemspec :path => ".."
 
-gem "alox", :path => "../../alox"
+gem "alox"
 gem "alox-jason"
 
 # vim: set ft=ruby:
