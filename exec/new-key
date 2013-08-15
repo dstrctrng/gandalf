@@ -11,8 +11,8 @@ shome="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
 
 # load a jason bourne library
 source _jason
-require _gandalf "${GANDALF:-}"
-require _gandalf_
+require gandalf "${GANDALF:-}"
+require gandalf_
 
 readonly cfg_gandalf="$GANDALF/config/gandalf.yml"
 
@@ -43,4 +43,4 @@ EOF
   gpg --export -a "$email" > "$(keys_path)/$email"
 }
 
-require _sub "$BASH_SOURCE" "$@"
+require sub "$BASH_SOURCE" "$@"

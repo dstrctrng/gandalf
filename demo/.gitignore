@@ -1,3 +1,4 @@
 /.bundle
 /vendor/bundle
-/bin/alox
+/config/keys
+/config/secrets
