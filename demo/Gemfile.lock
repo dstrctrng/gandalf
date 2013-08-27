@@ -7,7 +7,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     alox (0.0.8)
-    alox-jason (0.0.30)
+    alox-jason (0.0.31)
 
 PLATFORMS
   ruby
