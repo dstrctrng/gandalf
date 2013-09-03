@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
   s.date        = %q{2013-07-04}
   s.executables   = [ ]
   s.require_paths = [ "lib" ]
-  s.files = Dir.glob("alox*/**/*") + Dir.glob("lib/**/*")
+  s.files = Dir.glob("exec/**/*") + Dir.glob("lib/**/*")
 end
